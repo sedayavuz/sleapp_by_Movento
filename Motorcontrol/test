@@ -1,0 +1,143 @@
+	/*Out.ControlWord = 0x6;				// schaltet in den Zustand "enable voltage"
+	do 	{
+			yield();						// warten auf den nächsten Zyklus (1ms)
+		}
+		while ( (od_read(0x6041, 0x00) & 0xEF) != 0x21);
+	
+	
+	
+	Out.OperationMode = 6;
+	Out.HomingMethod =  0xEF;
+	//Out.HomingOffset = 0xFFFF63C0;
+	//Out.HomingOffset = 0xFFFF63C0; //2,2cm
+	
+	
+	yield();
+	
+		Out.ControlWord = 0x7;	// schaltet in den Zustand "switched on"
+	do 	{
+			yield();						// warten auf den nächsten Zyklus (1ms)
+		}
+		while ( (od_read(0x6041, 0x00) & 0xEF) != 0x23);   // wartet bis der Zustand ist "switched on" 
+		// Statusword (0x6041) auf die Bitmaske xxxx xxxx x01x 0011					
+	Out.ControlWord = 0xF;	// schaltet in den Zustand "enable operation" 
+	do 	{
+			yield();						// warten auf den nächsten Zyklus (1ms)
+		}
+		while ( (od_read(0x6041, 0x00) & 0xEF) != 0x27);   // wartet bis der Zustand ist "operation enabled"	
+		// 
+		
+	Out.ControlWord = 0x1F;				//startet die Fahrt	
+	yield();
+	while((In.StatusWord & 0x1400)!=0x1400)             		//warte bis Referenazfahrt angeschlossen, Bits 12 und 10 beide high
+		{
+			yield();
+		} 
+	
+	
+	Out.ControlWord = 0x7;	// schaltet in den Zustand "switched on", um den Operationsmodus zu wechseln
+	do 	{
+			yield();						// warten auf den nächsten Zyklus (1ms)
+		}
+		while ( (od_read(0x6041, 0x00) & 0xEF) != 0x23);   // wartet bis der Zustand ist "switched on" 
+		// 041) auf die Bitmaske xxxx xxxx x01x 0011	
+	
+	Out.OperationMode = 1;                       // setzt den Operationsmodus auf Positionsmodus 
+	yield();
+	
+	
+	Out.TargetPosition = 0;   
+	
+	
+	
+	
+	
+	
+
+	//od_write(0x6098, 0x00,  0xEF);
+	//od_write(0x607C, 0x00, 0xFFFF63C0);
+	//od_write(0x6099, 0x01
+	
+	
+	
+	
+	
+	//current
+	//block time
+	//go back
+	
+	
+		// Request the state "Operation enabled"
+		//od_write(0x6040, 0x00, 0xF);
+
+
+
+
+
+
+	sleep(5000); // wait for 5sec
+	
+	while (i <= 4) {
+	
+		// Set mode "Profile velocity"
+		od_write(0x6060, 0x00, 3);
+	
+		// Set the target velocity
+		od_write(0x60FF, 0x00, 50);
+	
+	 	// Request state "Ready to switch on"
+		od_write(0x6040, 0x00, 0x6);
+	
+		// Wait until the requested state is reached
+		while ( (In.StatusWord & 0xEF) != 0x21) {
+			yield(); // Wait for the next cycle (1ms)
+		}
+	
+		// Request the state "Switched on"
+	
+		od_write(0x6040, 0x00, 0x7);
+	
+		// Wait until the requested state is reached
+		while ( (In.StatusWord & 0xEF) != 0x23) {
+			yield();
+		}
+	
+		// Request the state "Operation enabled"
+		od_write(0x6040, 0x00, 0xF);
+	
+		// Wait until the requested state is reached
+		while ( (In.StatusWord & 0xEF) != 0x27) {
+			yield();
+		}
+		
+		// Let the motor run for a while
+		sleep(1800);
+		
+		// Set the target velocity to run in the opposite direction
+		od_write(0x60FF, 0x00, -50);
+	
+		// Let the motor run for a while
+		sleep(1800);
+		
+		od_write(0x60FF, 0x00, +50);
+		
+		i++;
+	
+	}
+
+
+	// Profile Torque
+	//od_write(0x6060, 0x00, 4)
+	//
+	
+	// Stop the motor
+	od_write(0x6040, 0x00, 0x0);
+
+	// Reset the target velocity to its previous value
+	od_write(0x60FF, 0x00, targetVelocity);
+
+	// Stop the NanoJ program. Without this line, the firmware would
+	// call user() again as soon as we return.
+	od_write(0x2300, 0x00, 0x0);
+}
+

@@ -1,0 +1,50 @@
+ARM GAS  C:\WINDOWS\ccuzMTGa.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"mapping.cxx"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	In
+  19              		.section	.inputs,"aw",%progbits
+  20              		.align	2
+  23              	In:
+  24 0000 0000     		.space	2
+  25              		.global	Out
+  26 0002 0000     		.section	.outputs,"aw",%progbits
+  27              		.align	2
+  30              	Out:
+  31 0000 00000000 		.space	30
+  31      00000000 
+  31      00000000 
+  31      00000000 
+  31      00000000 
+  32 001e 0000     		.text
+  33              	.Letext0:
+  34              		.file 1 "C:\\Plug & Drive Studio\\PNDS-2.0.5-x86\\workspace\\neu\\gen\\types.h"
+  35              		.file 2 "C:\\Plug & Drive Studio\\PNDS-2.0.5-x86\\workspace\\neu\\gen\\mapping.h"
+  36              		.file 3 "C:\\Plug & Drive Studio\\PNDS-2.0.5-x86\\workspace\\neu\\gen\\mapping.cxx"
+ARM GAS  C:\WINDOWS\ccuzMTGa.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mapping.cxx
+C:\WINDOWS\ccuzMTGa.s:23     .inputs:00000000 In
+C:\WINDOWS\ccuzMTGa.s:20     .inputs:00000000 $d
+C:\WINDOWS\ccuzMTGa.s:30     .outputs:00000000 Out
+C:\WINDOWS\ccuzMTGa.s:27     .outputs:00000000 $d
+
+NO UNDEFINED SYMBOLS
